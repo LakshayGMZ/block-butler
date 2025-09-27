@@ -39,7 +39,7 @@ export default function Header() {
               background: "conic-gradient(from 45deg, #ff7a7a, #f8bf3f, #4fe3a3, #5aa9ff, #c07bff, #ff7a7a)",
             }}
           />
-          <h1 className="text-xl font-medium text-black">BlockChat</h1>
+          <h1 className="text-xl font-medium text-black">BlockButler</h1>
         </div>
 
         {/* Wallet Connection */}

@@ -1,15 +1,15 @@
-"use client"
-
+import axios from "axios"
 import { Mic, Plus, Zap } from "lucide-react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 
-export default function AIPrompt({ query, setQuery, setStarted, onSubmit, placeholder = "Message Copilot" }) {
+export default function AIPrompt({ query, setQuery, setStarted, onSubmit, placeholder = "Message BlockButler" }) {
   const [mode, setMode] = useState("Quick response")
 
+  
   function handleSubmit(e) {
     e.preventDefault()
-    console.log("[v0] Submitted:", { query, mode })
+    console.log("Submitted:", { query, mode })
     setStarted && setStarted(true)
     onSubmit && onSubmit(query)
     setQuery("")
@@ -21,7 +21,7 @@ export default function AIPrompt({ query, setQuery, setStarted, onSubmit, placeh
       onSubmit={handleSubmit}
       className="mx-auto w-full rounded-2xl shadow-2xl p-1.5 bg-gradient-to-b from-[#dedbda] to-[#f9f7f6]"
       role="search"
-      aria-label="Message Copilot"
+      aria-label="Message BlockButler"
     >
       <div className="items-center gap-2 md:gap-3 px-3 md:px-4 pt-2 bg-[#f9f7f6] rounded-xl">
         <input

@@ -181,9 +181,9 @@ const Message = ({
         </AnimatePresence>
 
         <AnimatePresence>
-          {showBalance && message.balanceData && (
+          {showBalance && message.balanceAddress && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
-              <BalanceDisplay balances={message.balanceData} onRefresh={() => console.log("Refreshing balances...")} />
+              <BalanceDisplay address={message.balanceAddress} onRefresh={() => console.log("Refreshing balances...")} />
             </motion.div>
           )}
         </AnimatePresence>
