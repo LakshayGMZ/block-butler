@@ -56,7 +56,7 @@ export default function Header() {
             >
               {/* <Wallet className="size-4" />
               <span className="text-sm font-medium">{isLoading ? "Connecting..." : "Connect Wallet"}</span> */}
-              <ConnectButton/>
+              
               
             </motion.button>
           ) : (

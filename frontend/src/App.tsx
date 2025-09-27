@@ -1,22 +1,52 @@
+
 "use client"
 
 import { useState } from "react"
 import AIChat from "@/components/AIChat"
 import LandingPage from "./components/LandingPage"
 import Header from "./components/Header"
+import { useAccount } from "wagmi"
+
+// Define a type for messages
+interface ChatMessage {
+  content: string
+  timestamp: string
+  isAi: boolean
+  showTransaction?: boolean
+  transactionData?: {
+    from: string
+    to: string
+    amount: string
+    token: string
+    gasFee: string
+    total: string
+  }
+  showCodeEditor?: boolean
+  contractCode?: string
+  showBalance?: boolean
+  balanceData?: {
+    symbol: string
+    name: string
+    balance: string
+    value: number
+  }[]
+  showSwap?: boolean
+  showBridge?: boolean
+}
 
 function App() {
   const [prompt, setPrompt] = useState("")
   const [started, setStarted] = useState(false)
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const { address } = useAccount()
 
-  const handleSubmit = (prompt) => {
+  const handleSubmit = (prompt: string) => {
     if (!prompt.trim()) return
 
     setStarted(true)
 
-    const userMessage = {
+    const userMessage: ChatMessage = {
       content: prompt,
       timestamp: new Date().toISOString(),
       isAi: false,
@@ -26,7 +56,7 @@ function App() {
     setIsLoading(true)
 
     setTimeout(() => {
-      const aiResponse = {
+      const aiResponse: ChatMessage = {
         content: `This is a simulated response to: "${prompt}"\n\nIn a real implementation, this would be replaced with an actual API call to your AI backend.`,
         timestamp: new Date().toISOString(),
         isAi: true,
@@ -38,11 +68,11 @@ function App() {
       if (lowerPrompt.includes("transaction") || lowerPrompt.includes("send") || lowerPrompt.includes("transfer")) {
         aiResponse.showTransaction = true
         aiResponse.transactionData = {
-          from: "0x742d35Cc6634C0532925a3b8D4C9db96590b5b8c",
-          to: "0x8ba1f109551bD432803012645Hac136c",
-          amount: "0.5",
+          from: address ?? "",
+          to: "0x37Fcd6f3a0205076b6Be130f26b55652e4d28187",
+          amount: "0.05",
           token: "ETH",
-          gasFee: "0.002",
+          gasFee: "21000",
           total: "0.502",
         }
       }
@@ -122,3 +152,4 @@ contract ${prompt.includes("token") ? "SimpleToken" : "SimpleStorage"} {
 }
 
 export default App
+

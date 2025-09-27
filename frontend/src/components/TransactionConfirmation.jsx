@@ -1,29 +1,45 @@
+
 "use client"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { AlertTriangle, ArrowRight, Loader2, CheckCircle, XCircle } from "lucide-react"
+import { useSendTransaction } from "wagmi"
 
 export default function TransactionConfirmation({ transaction, onConfirm, onCancel }) {
-  const [isProcessing, setIsProcessing] = useState(false)
   const [status, setStatus] = useState("pending") // pending, processing, success, error
+  const { sendTransactionAsync } = useSendTransaction()
 
   const handleConfirm = async () => {
-    setIsProcessing(true)
     setStatus("processing")
 
     try {
-      // Simulate transaction processing
-      await new Promise((resolve) => setTimeout(resolve, 3000))
+      // Construct tx request (values must be BigInt for wagmi/viem)
+      const txRequest = {
+        to: transaction.to,
+        value: BigInt(Math.floor(Number(transaction.amount) * 1e18)), // convert ETH to wei
+        gas: BigInt(transaction.gasLimit || 21000),
+        gasPrice: transaction.gasPrice ? BigInt(transaction.gasPrice) : undefined,
+      }
+
+      // Send transaction
+      const txHash = await sendTransactionAsync(txRequest)
+
+      console.log("Transaction sent:", txHash)
       setStatus("success")
-      setTimeout(() => {
-        onConfirm(transaction)
-      }, 1500)
+
+      // Notify parent component with tx details
+      onConfirm({
+        ...transaction,
+        hash: txHash,
+      })
     } catch (error) {
+      console.error("Transaction failed:", error)
       setStatus("error")
+
+      // Reset after error
       setTimeout(() => {
         setStatus("pending")
-        setIsProcessing(false)
       }, 2000)
     }
   }
@@ -114,15 +130,13 @@ export default function TransactionConfirmation({ transaction, onConfirm, onCanc
         <div className="flex gap-3">
           <button
             onClick={onCancel}
-            disabled={isProcessing}
-            className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-[#f7f3f2] border border-[#dedbda] rounded-lg hover:bg-[#dedbda] transition-colors disabled:opacity-50"
+            className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-[#f7f3f2] border border-[#dedbda] rounded-lg hover:bg-[#dedbda] transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={handleConfirm}
-            disabled={isProcessing}
-            className="flex-1 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-colors disabled:opacity-50"
+            className="flex-1 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-colors"
           >
             Confirm Transaction
           </button>
@@ -131,3 +145,4 @@ export default function TransactionConfirmation({ transaction, onConfirm, onCanc
     </motion.div>
   )
 }
+
