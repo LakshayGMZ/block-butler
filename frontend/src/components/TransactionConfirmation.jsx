@@ -1,6 +1,3 @@
-
-"use client"
-
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { AlertTriangle, ArrowRight, Loader2, CheckCircle, XCircle } from "lucide-react"
@@ -18,8 +15,8 @@ export default function TransactionConfirmation({ transaction, onConfirm, onCanc
       const txRequest = {
         to: transaction.to,
         value: BigInt(Math.floor(Number(transaction.amount) * 1e18)), // convert ETH to wei
-        gas: BigInt(transaction.gasLimit || 21000),
-        gasPrice: transaction.gasPrice ? BigInt(transaction.gasPrice) : undefined,
+        gas: BigInt(transaction?.gasLimit || 21000),
+        gasPrice: undefined,
       }
 
       // Send transaction
