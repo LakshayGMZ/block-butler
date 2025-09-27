@@ -37,7 +37,7 @@ export default function LandingPage({ query, setQuery, onSubmit }) {
             key={s}
             type="button"
             onClick={() => handleChipClick(s)}
-            className="rounded-lg border-[1px] border-[#dedbda] bg-[#faf8f7] px-3 py-2 text-sm text-black/80 hover:bg-accent transition-colors"
+            className="rounded-lg border-[1px] border-[#dedbda] bg-[#faf8f7] px-3 py-2 text-sm text-black/80 hover:bg-[#fff] transition-colors cursor-pointer"
             aria-label={`Use suggestion: ${s}`}
           >
             {s}
