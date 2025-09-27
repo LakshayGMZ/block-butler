@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Wallet, ChevronDown, Copy, ExternalLink } from "lucide-react"
 import { useWallet } from "../hooks/useWallet"
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export default function Header() {
   const { isConnected, address, balance, isLoading, error, connect, disconnect, refreshBalance } = useWallet()
@@ -53,8 +54,10 @@ export default function Header() {
               disabled={isLoading}
               className="flex items-center gap-2 px-4 py-2 bg-gradient-to-b from-[#dedbda] to-[#f9f7f6] rounded-xl shadow-sm hover:shadow-md transition-shadow border border-[#dedbda] disabled:opacity-50"
             >
-              <Wallet className="size-4" />
-              <span className="text-sm font-medium">{isLoading ? "Connecting..." : "Connect Wallet"}</span>
+              {/* <Wallet className="size-4" />
+              <span className="text-sm font-medium">{isLoading ? "Connecting..." : "Connect Wallet"}</span> */}
+              <ConnectButton/>
+              
             </motion.button>
           ) : (
             <div className="relative">
