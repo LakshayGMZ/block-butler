@@ -2,14 +2,14 @@
 import AIPrompt from "./AIPrompt"
 
 const suggestions = [
-  "Check my wallet balance",
-  "Send 0.1 ETH to address",
-  "Deploy a simple token contract",
-  "Swap ETH for USDC",
-  "Bridge tokens to Polygon",
-  "Create a NFT contract",
-  "Check gas prices",
-  "Explain DeFi protocols",
+  { label: "Check my wallet balance", value: "Check my wallet balance 0xDF48E7a870b8822B83A9A5F45b959403ac7D7143" },
+  { label: "Send 0.001 ETH to address", value: "send 0.001 ETH from 0xDF48E7a870b8822B83A9A5F45b959403ac7D7143 to 0x37Fcd6f3a0205076b6Be130f26b55652e4d28187" },
+  { label: "Deploy a simple token contract", value: "Deploy a simple token contract" },
+  { label: "Swap ETH for USDC", value: "Buy 5.3 USDC" },
+  { label: "Bridge tokens to Polygon", value: "Bridge tokens to Polygon" },
+  { label: "Create a NFT contract", value: "Create a NFT contract" },
+  { label: "Check gas prices", value: "Check gas prices" },
+  { label: "Explain DeFi protocols", value: "Explain DeFi protocols" },
 ]
 
 export default function LandingPage({ query, setQuery, onSubmit }) {
@@ -32,15 +32,15 @@ export default function LandingPage({ query, setQuery, onSubmit }) {
 
       {/* Suggestion chips */}
       <div className="mt-6 flex flex-wrap gap-2 md:gap-3">
-        {suggestions.map((s) => (
+        {suggestions.map(({ label, value }) => (
           <button
-            key={s}
+            key={value}
             type="button"
-            onClick={() => handleChipClick(s)}
+            onClick={() => handleChipClick(value)}
             className="rounded-lg border-[1px] border-[#dedbda] bg-[#faf8f7] px-3 py-2 text-sm text-black/80 hover:bg-[#fff] transition-colors cursor-pointer"
-            aria-label={`Use suggestion: ${s}`}
+            aria-label={`Use suggestion: ${label}`}
           >
-            {s}
+            {label}
           </button>
         ))}
       </div>
