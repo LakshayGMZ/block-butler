@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useRef, useEffect } from "react"
 import AIPrompt from "./AIPrompt"
 import TransactionConfirmation from "./TransactionConfirmation"
@@ -196,6 +194,9 @@ const Message = ({
                   setShowSwap(false)
                   onSwap && onSwap(swapData)
                 }}
+                fromToken={message.fromToken}
+                toToken={message.toToken}
+                amount={message.amount}
                 onCancel={() => setShowSwap(false)}
               />
             </motion.div>
